@@ -1,0 +1,33 @@
+__pypackages__/
+__pycache__/
+.github/
+.pytest_cache/
+.vscode/
+build/
+dist/
+htmlcov/
+scripts/
+tests/
+
+# Environments
+.env
+.env.example
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+
+gcp_cloud_build.yaml
+openapi-serveless.yaml
+
+# Files
+.coverage
+.gitignore
+bucket_cors.json
+docker-compose.yml
+Dockerfile_dev.yml
+gcp_cloud_build.yaml
+openapi-serveless.yaml

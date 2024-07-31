@@ -1,0 +1,134 @@
+[tool.poetry]
+name = "stark-challenge"
+version = "0.1.0"
+description = "Stark Bank Skills Test"
+authors = ["Flavio Santos <flavio.gds@gmail.com>"]
+license = "Proprietary"
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "0.110.0"
+starkbank = "^2.26.0"
+python-dotenv = "^0.21.1"
+google-cloud = "^0.34.0"
+google-cloud-firestore = "^2.17.0"
+pydantic = "2.6.4"
+uvicorn = "0.29.0"
+fastapi-cli = "^0.0.4"
+
+[tool.poetry.group.dev.dependencies]
+httpx = "^0.27.0"
+mock-firestore = "^0.11.0"
+pytest = "7.2.2"
+pytest-cov = "^4.0.0"
+pytest-pylint = "^0.19.0"
+coverage = "^7.2.2"
+pyink = "^23.5.0"
+pylint = "^2.17.4"
+bandit = "^1.7.5"
+isort = "^5.12.0"
+
+[tool.poetry.scripts]
+start = "app:main.run()"
+
+[tool.pyink]
+line-length = 120
+
+[tool.bandit]
+exclude_dirs = [".venv","venv","tests"]
+
+[tool.pylint.main]
+fail-under=10
+reports = true
+
+[tool.pylint."message control"]
+disable = [
+  # validated
+  "missing-function-docstring",
+  "missing-module-docstring",
+  "missing-class-docstring",
+  "too-many-arguments",
+  "cyclic-import",
+  # Remove future
+  "unknown-option-value",
+  "invalid-name",
+  # not validated
+  "duplicate-code",
+  "eq-without-hash",
+  "function-redefined",
+  "implicit-str-concat",
+  "misplaced-comparison-constant",
+  "no-else-break",
+  "no-else-continue",
+  "no-member",
+  "no-name-in-module",
+  "no-else-return",
+  "raise-missing-from",
+  "too-few-public-methods",
+  "too-many-ancestors",
+  "too-many-instance-attributes",
+  "too-many-locals",
+  "too-many-statements",
+  "using-constant-test",
+]
+
+[tool.isort]
+skip=["__init__.py"]
+
+[tool.pylint.similarities]
+ignore-comments = true
+ignore-docstrings = true
+ignore-imports = false
+min-similarity-lines = 4
+
+[tool.pylint.design]
+max-args = 5
+max-attributes = 7
+max-bool-expr = 5
+max-branches = 15
+max-locals = 15
+max-parents = 7
+max-public-methods = 20
+max-returns = 6
+max-statements = 50
+min-public-methods = 2
+
+[tool.pylint.classes]
+defining-attr-methods = [ 
+  "__init__",
+  "__new__",
+  "setUp"
+]
+exclude-protected = [
+  "asdict",
+  "_fields",
+  "_replace",
+  "_source",
+  "_make"
+] 
+valid-classmethod-first-arg = ["cls"]
+valid-metaclass-classmethod-first-arg = ["cls"]
+
+[tool.pylint.format]
+max-line-length = 120
+ignored-modules = ["typing_extensions"]
+
+[tool.coverage.run]
+source = [
+  "src/core",
+  "src/infra",
+]
+branch = true
+command_line = "-m pytest"
+
+[tool.coverage.report]
+exclude_lines = ["pragma: no cover"]
+fail_under = 52 
+
+[tool.pytest.ini_options]
+addopts = "-v"
+filterwarnings = [
+    "ignore:.*pkg_resources*:DeprecationWarning"
+]
