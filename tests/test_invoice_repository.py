@@ -5,7 +5,7 @@ from mockfirestore import MockFirestore
 
 from src.infra.invoice_repository import InvoiceRepository
 
-#pylint: disable=W621
+#pylint: disable=W0613 W0621
 
 
 class MockFirestorePlus(MockFirestore):

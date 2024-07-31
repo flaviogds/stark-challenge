@@ -11,7 +11,7 @@ coverage-browser:
 	 coverage html && cd htmlcov && python -m webbrowser index.html && cd ..
 
 lint:
-	pylint --recursive=y app/ tests/
+	pylint --recursive=y src/ tests/
 
 format:
 	pyink -q . && isort .

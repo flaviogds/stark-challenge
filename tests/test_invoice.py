@@ -11,7 +11,7 @@ from src.infra.invoice_repository import InvoiceRepository
 from src.infra.stark_bank import StarkBank
 from src.schemas.invoice import Invoice
 
-#pylint: disable=W621
+#pylint: disable=W0621
 
 
 def create_app():
