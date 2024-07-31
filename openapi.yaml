@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  title: Stark Challende
+  title: Stark Challenge
   description: Stark Bank Skills Test
   version: 0.1.0
 
@@ -24,8 +24,9 @@ x-google-management:
         unit: '1/min/{project}'
         values:
           STANDARD: 1000
+
 paths:
-  /invoice:
+  /api/v1/invoice:
     post:
       summary: Create invoice
       operationId: createInvoice
@@ -66,7 +67,7 @@ paths:
       security:
         - api_key: []
 
-  /invoice/callback:
+  /api/v1/invoice/callback:
     post:
       summary: Callback function for invoice events
       operationId: callbackInvoice
@@ -86,6 +87,39 @@ paths:
           type: object
       responses:
         '201':
+          description: A successful response object
+          schema:
+            $ref: '#/definitions/Success'
+        '400':
+          description: Client error
+          schema:
+            $ref: '#/definitions/Error'
+        '422':
+          description: Client error
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/Error'
+      x-google-quota:
+        metricCosts:
+          'read-requests': 1
+      security:
+        - api_key: []
+
+  /api/docs:
+    get:
+      summary: Get API documentation
+      operationId: getDocs
+      x-google-backend:
+        address: $APP_ADDRESS
+        path_translation: APPEND_PATH_TO_ADDRESS
+        protocol: h2
+        jwt_audience: $APP_ADDRESS
+        deadline: 600.0
+      responses:
+        '200':
           description: A successful response object
           schema:
             $ref: '#/definitions/Success'

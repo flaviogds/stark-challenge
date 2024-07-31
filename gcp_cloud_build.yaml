@@ -48,7 +48,7 @@ steps:
         apt-get update
         apt-get install -qq -y gettext
 
-        export APP_ADDRESS=$(gcloud run services describe $_SERVICE_NAME --region $_DEPLOY_REGION --format 'value(status.url)')
+        export APP_ADDRESS=$(gcloud run services describe $_SERVICE_NAME    --region $_DEPLOY_REGION --format 'value(status.url)')
         export API_HOSTNAME=$(gcloud api-gateway apis describe $_SERVICE_NAME --format 'value(managedService)')
 
         envsubst '$API_HOSTNAME' < openapi-serveless.yaml > openapi-serveless-step1.yaml
