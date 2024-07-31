@@ -1,0 +1,134 @@
+swagger: '2.0'
+info:
+  title: Stark Challende
+  description: Stark Bank Skills Test
+  version: 0.1.0
+
+host: $API_HOSTNAME
+x-google-endpoints:
+- name: $API_HOSTNAME
+  allowCors: True
+schemes:
+  - https
+
+x-google-management:
+  metrics:
+    - name: 'read-requests'
+      displayName: 'Read requests'
+      valueType: INT64
+      metricKind: DELTA
+  quota:
+    limits:
+      - name: 'read-limit'
+        metric: 'read-requests'
+        unit: '1/min/{project}'
+        values:
+          STANDARD: 1000
+paths:
+  /invoice:
+    post:
+      summary: Create invoice
+      operationId: createInvoice
+      x-google-backend:
+        address: $APP_ADDRESS
+        path_translation: APPEND_PATH_TO_ADDRESS
+        protocol: h2
+        jwt_audience: $APP_ADDRESS
+        deadline: 600.0
+      consumes:
+        - application/json
+      parameters:
+      - in: body
+        name: data
+        description: Data to create a new invoice
+        schema:
+          type: object
+      responses:
+        '201':
+          description: A successful response object
+          schema:
+            $ref: '#/definitions/Success'
+        '400':
+          description: Client error
+          schema:
+            $ref: '#/definitions/Error'
+        '422':
+          description: Client error
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/Error'
+      x-google-quota:
+        metricCosts:
+          'read-requests': 1
+      security:
+        - api_key: []
+
+  /invoice/callback:
+    post:
+      summary: Callback function for invoice events
+      operationId: callbackInvoice
+      x-google-backend:
+        address: $APP_ADDRESS
+        path_translation: APPEND_PATH_TO_ADDRESS
+        protocol: h2
+        jwt_audience: $APP_ADDRESS
+        deadline: 600.0
+      consumes:
+        - application/json
+      parameters:
+      - in: body
+        name: data
+        description: Data from invoice event
+        schema:
+          type: object
+      responses:
+        '201':
+          description: A successful response object
+          schema:
+            $ref: '#/definitions/Success'
+        '400':
+          description: Client error
+          schema:
+            $ref: '#/definitions/Error'
+        '422':
+          description: Client error
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/Error'
+      x-google-quota:
+        metricCosts:
+          'read-requests': 1
+      security:
+        - api_key: []
+
+definitions:
+  Success:
+    description: A successful response object
+    type: object
+    properties:
+      message:
+        type: string
+
+  Error:
+    description: Error response object
+    type: object
+    properties:
+      status:
+        type: string
+      message:
+        type: string
+
+# [START securityDef]
+securityDefinitions:
+  # This section configures basic authentication with an API key.
+  api_key:
+    type: apiKey
+    name: api-key
+    in: query
+# [END securityDef]
