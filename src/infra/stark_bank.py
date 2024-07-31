@@ -31,7 +31,7 @@ class StarkBank: #pragma: no cover
             starkbank.Invoice: The created invoice object.
 
         """
-        new_invoice = starkbank.invoice.create([starkbank.Invoice(**invoice), self._user])
+        new_invoice = starkbank.invoice.create([starkbank.Invoice(**invoice)], self._user)
         if new_invoice:
             return new_invoice[0]
         return None
