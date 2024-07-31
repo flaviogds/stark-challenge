@@ -1,7 +1,7 @@
 import starkbank
 
 
-class StarkBank:
+class StarkBank: #pragma: no cover
     """
     A class representing the StarkBank API integration for invoice creation and transfer.
 

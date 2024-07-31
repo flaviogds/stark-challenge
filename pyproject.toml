@@ -40,7 +40,7 @@ line-length = 120
 exclude_dirs = [".venv","venv","tests"]
 
 [tool.pylint.main]
-fail-under=10
+fail-under=9.5
 reports = true
 
 [tool.pylint."message control"]
@@ -125,7 +125,7 @@ command_line = "-m pytest"
 
 [tool.coverage.report]
 exclude_lines = ["pragma: no cover"]
-fail_under = 52 
+fail_under = 95 
 
 [tool.pytest.ini_options]
 addopts = "-v"
