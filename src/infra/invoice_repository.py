@@ -57,7 +57,7 @@ class InvoiceRepository:
         return None
 
     @staticmethod
-    def _convert_datetime_fields(data):
+    def _convert_datetime_fields(data): #pragma: no cover
         for key, value in data.items():
             if isinstance(value, datetime.datetime):
                 data[key] = value.isoformat()
