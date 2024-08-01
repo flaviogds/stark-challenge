@@ -1,3 +1,4 @@
+import datetime
 from google.cloud import firestore
 
 
@@ -20,7 +21,8 @@ class InvoiceRepository:
             dict: The created invoice data retrieved from the database.
         """
         document = self.db.collection("invoices").document(invoice["id"])
-        document.set(invoice)
+        data_normailized = self._convert_datetime_fields(invoice)
+        document.set(data_normailized)
         return document.get().to_dict()
 
     def update(self, invoice):
@@ -34,7 +36,8 @@ class InvoiceRepository:
             dict: The updated invoice data.
         """
         document = self.db.collection("invoices").document(invoice["id"])
-        document.update(invoice)
+        data_normailized = self._convert_datetime_fields(invoice)
+        document.set(data_normailized)
         return document.get().to_dict()
 
     def get(self, invoice_id):
@@ -52,3 +55,12 @@ class InvoiceRepository:
         if document.exists:
             return document.to_dict()
         return None
+
+    @staticmethod
+    def _convert_datetime_fields(data):
+        for key, value in data.items():
+            if isinstance(value, datetime.datetime):
+                data[key] = value.isoformat()
+            elif isinstance(value, datetime.timedelta):
+                data[key] = value.total_seconds()
+        return data
