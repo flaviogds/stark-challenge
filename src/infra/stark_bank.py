@@ -18,7 +18,7 @@ class StarkBank: #pragma: no cover
         self._user = starkbank.Project(
             id=config.project_id, private_key=config.private_key, environment=config.environment
         )
-        self._trasnfer_account = config.transfer_account
+        self._transfer_account = config.transfer_account
 
     def create_invoice(self, invoice: dict):
         """
